@@ -21,7 +21,18 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
+
+  public function newsletter()
+    {
+        return $this->hasOne(Newsletter::class);
+    }
+
+  public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
