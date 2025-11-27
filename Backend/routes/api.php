@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NewsletterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
@@ -21,4 +23,27 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/tickets', [TicketController::class, 'store']);
     Route::get('/tickets/{ticket}', [TicketController::class, 'show']);
     Route::get('/events/{eventId}/tickets', [TicketController::class, 'eventTickets']);
+});
+
+
+
+
+
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::middleware('auth:sanctum')->group(function () {
+Route::post('/logout', [AuthController::class, 'logout']);
+    
+});
+
+
+
+Route::post('/newsletter', [NewsletterController::class, 'store']);
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/newsletters', [NewsletterController::class, 'index']);
+    Route::get('/newsletters/{id}', [NewsletterController::class, 'show']);
+    Route::delete('/newsletters/{id}', [NewsletterController::class, 'destroy']);
 });
