@@ -3,64 +3,71 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ticket;
+use App\Models\Event;
 use App\Http\Requests\StoreTicketRequest;
-use App\Http\Requests\UpdateTicketRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TicketController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->user()->role === 'admin') {
+            $tickets = Ticket::with(['user', 'event'])->orderBy('created_at', 'desc')->get();
+        } else {
+            $tickets = Ticket::with('event')
+                ->where('user_id', $request->user()->id)
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
+
+        return response()->json($tickets);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreTicketRequest $request)
     {
-        //
+        $event = Event::findOrFail($request->event_id);
+
+        $soldTickets = Ticket::where('event_id', $event->id)->count();
+
+        if ($soldTickets >= $event->capacity) {
+            return response()->json(['message' => 'Event is sold out'], 400);
+        }
+
+        $ticket = Ticket::create([
+            'user_id' => $request->user()->id,
+            'event_id' => $event->id,
+            'code' => strtoupper(Str::random(10)),
+            'amount' => $event->price,
+        ]);
+
+        $ticket->load('event');
+
+        return response()->json($ticket, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Ticket $ticket)
     {
-        //
+        if (request()->user()->role !== 'admin' && $ticket->user_id !== request()->user()->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $ticket->load(['event', 'user']);
+
+        return response()->json($ticket);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Ticket $ticket)
+    public function eventTickets($eventId)
     {
-        //
-    }
+        if (request()->user()->role !== 'admin') {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTicketRequest $request, Ticket $ticket)
-    {
-        //
-    }
+        $tickets = Ticket::with('user')
+            ->where('event_id', $eventId)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Ticket $ticket)
-    {
-        //
+        return response()->json($tickets);
     }
 }
