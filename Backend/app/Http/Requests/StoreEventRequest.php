@@ -11,18 +11,19 @@ class StoreEventRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'starts_at' => 'required|date|after:now',
+            'location' => 'nullable|string|max:255',
+            'capacity' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:0',
+            'image' => 'nullable|string',
         ];
     }
 }
