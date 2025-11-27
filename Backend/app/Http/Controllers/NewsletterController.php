@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Newsletter;
 use App\Http\Requests\StoreNewsletterRequest;
 use App\Http\Requests\UpdateNewsletterRequest;
+use Illuminate\Http\Request;
 
 class NewsletterController extends Controller
 {
@@ -13,7 +14,7 @@ class NewsletterController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Newsletter::with('user')->get(), 200);
     }
 
     /**
@@ -27,17 +28,36 @@ class NewsletterController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreNewsletterRequest $request)
+      public function store(Request $request)
     {
-        //
+        $request->validate([
+            'email' => 'required|email|unique:newsletters,email',
+            'user_id' => 'nullable|exists:users,id'
+        ]);
+
+        $newsletter = Newsletter::create([
+            'email' => $request->email,
+            'user_id' => $request->user_id
+        ]);
+
+        return response()->json([
+            'message' => 'Email added to newsletter',
+            'newsletter' => $newsletter
+        ], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Newsletter $newsletter)
+    public function show($id)
     {
-        //
+        $newsletter = Newsletter::with('user')->find($id);
+
+        if (! $newsletter) {
+            return response()->json(['message' => 'Newsletter not found'], 404);
+        }
+
+        return response()->json($newsletter, 200);
     }
 
     /**
@@ -59,8 +79,16 @@ class NewsletterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Newsletter $newsletter)
+    public function destroy($id)
     {
-        //
+        $newsletter = Newsletter::find($id);
+
+        if (! $newsletter) {
+            return response()->json(['message' => 'Newsletter not found'], 404);
+        }
+
+        $newsletter->delete();
+
+        return response()->json(['message' => 'Newsletter entry deleted'], 200);
     }
 }
