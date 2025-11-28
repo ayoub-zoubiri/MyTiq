@@ -7,6 +7,8 @@ use App\Models\Event;
 use App\Http\Requests\StoreTicketRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use App\Events\TicketPurchased;
 
 class TicketController extends Controller
 {
@@ -41,7 +43,10 @@ class TicketController extends Controller
             'amount' => $event->price,
         ]);
 
-        $ticket->load('event');
+        $ticket->load(['event', 'user']);
+
+        // Dispatch event to trigger PDF generation and email sending
+        TicketPurchased::dispatch($ticket);
 
         return response()->json($ticket, 201);
     }
@@ -69,5 +74,18 @@ class TicketController extends Controller
             ->get();
 
         return response()->json($tickets);
+    }
+
+    public function downloadPdf(Ticket $ticket)
+    {
+        if (request()->user()->role !== 'admin' && $ticket->user_id !== request()->user()->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        if (!$ticket->pdf_path || !Storage::exists($ticket->pdf_path)) {
+            return response()->json(['message' => 'PDF not found'], 404);
+        }
+
+        return Storage::download($ticket->pdf_path, 'billet-' . $ticket->code . '.pdf');
     }
 }
