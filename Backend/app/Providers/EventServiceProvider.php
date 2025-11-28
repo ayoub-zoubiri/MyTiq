@@ -24,6 +24,10 @@ class EventServiceProvider extends ServiceProvider
       \App\Events\NewsletterSubscribed::class => [
         \App\Listeners\SendNewsletterConfirmation::class,
     ],
+      \App\Events\TicketPurchased::class => [
+        \App\Listeners\GenerateTicketPdf::class,
+        \App\Listeners\SendTicketConfirmationEmail::class,
+    ],
     ];
 
     /**
