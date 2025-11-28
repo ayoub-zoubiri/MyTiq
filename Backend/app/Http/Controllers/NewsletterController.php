@@ -28,25 +28,7 @@ class NewsletterController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-      public function store(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email|unique:newsletters,email',
-            'user_id' => 'nullable|exists:users,id'
-        ]);
-
-        $newsletter = Newsletter::create([
-            'email' => $request->email,
-            'user_id' => $request->user_id
-        ]);
-event(new NewsletterSubscribed($newsletter));
-
-
-        return response()->json([
-            'message' => 'Email added to newsletter',
-            'newsletter' => $newsletter
-        ], 201);
-    }
+  
 
 
 
@@ -60,13 +42,13 @@ event(new NewsletterSubscribed($newsletter));
 
     public function store(StoreNewsletterRequest $request)
 {
-    // Données validées
+    
     $data = $request->validated();
 
-    // Création de l'abonnement
+  
     $newsletter = Newsletter::create($data);
 
-    // Déclenchement de l’event
+  
     event(new NewsletterSubscribed($newsletter));
 
     return response()->json([
