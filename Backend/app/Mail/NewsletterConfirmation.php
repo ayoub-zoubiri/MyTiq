@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\User;
+use App\Models\Newsletter;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -10,19 +10,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class WelcomeMail extends Mailable
+class NewsletterConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-    
-    public $user;
+     public $newsletter;
 
-    public function __construct(User $user)
+    public function __construct(Newsletter $newsletter)
     {
-        $this->user = $user;
+        $this->newsletter = $newsletter;
     }
 
     /**
@@ -31,7 +30,7 @@ class WelcomeMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Welcome Mail',
+            subject: 'Newsletter Confirmation',
         );
     }
 
@@ -41,9 +40,7 @@ class WelcomeMail extends Mailable
     public function content(): Content
     {
         return new Content(
-
-            view: 'emails.welcome',
-            
+            view: 'emails.newsletter',
         );
     }
 

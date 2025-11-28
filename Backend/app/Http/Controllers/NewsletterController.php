@@ -6,7 +6,7 @@ use App\Models\Newsletter;
 use App\Http\Requests\StoreNewsletterRequest;
 use App\Http\Requests\UpdateNewsletterRequest;
 use Illuminate\Http\Request;
-
+use App\Events\NewsletterSubscribed;
 class NewsletterController extends Controller
 {
     /**
@@ -39,6 +39,8 @@ class NewsletterController extends Controller
             'email' => $request->email,
             'user_id' => $request->user_id
         ]);
+event(new NewsletterSubscribed($newsletter));
+
 
         return response()->json([
             'message' => 'Email added to newsletter',

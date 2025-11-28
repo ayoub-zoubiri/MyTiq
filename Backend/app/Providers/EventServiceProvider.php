@@ -21,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\UserRegistered::class => [
         \App\Listeners\SendWelcomeEmail::class,
     ],
+      \App\Events\NewsletterSubscribed::class => [
+        \App\Listeners\SendNewsletterConfirmation::class,
+    ],
     ];
 
     /**

@@ -10,7 +10,7 @@ use App\Http\Controllers\TicketController;
 Route::get('/events', [EventController::class, 'index']);
 Route::get('/events/{event}', [EventController::class, 'show']);
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum','role:admin'])->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
@@ -31,8 +31,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
     
 });
