@@ -48,6 +48,32 @@ event(new NewsletterSubscribed($newsletter));
         ], 201);
     }
 
+
+
+
+
+
+
+
+
+
+
+    public function store(StoreNewsletterRequest $request)
+{
+    // Données validées
+    $data = $request->validated();
+
+    // Création de l'abonnement
+    $newsletter = Newsletter::create($data);
+
+    // Déclenchement de l’event
+    event(new NewsletterSubscribed($newsletter));
+
+    return response()->json([
+        'message' => 'Email added to newsletter',
+        'newsletter' => $newsletter
+    ], 201);
+}
     /**
      * Display the specified resource.
      */
