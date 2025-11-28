@@ -17,9 +17,6 @@ class EventController extends Controller
 
     public function store(StoreEventRequest $request)
     {
-        if ($request->user()->role !== 'admin') {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
 
         $event = Event::create($request->validated());
 
@@ -35,9 +32,6 @@ class EventController extends Controller
 
     public function update(UpdateEventRequest $request, Event $event)
     {
-        if ($request->user()->role !== 'admin') {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
 
         $event->update($request->validated());
 
@@ -46,10 +40,6 @@ class EventController extends Controller
 
     public function destroy(Event $event)
     {
-        if (request()->user()->role !== 'admin') {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
-
         $event->delete();
 
         return response()->json(['message' => 'Event deleted successfully']);
