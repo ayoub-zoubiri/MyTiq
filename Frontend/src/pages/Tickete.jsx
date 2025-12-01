@@ -81,7 +81,7 @@ export default function Tickete() {
           </button>
         </div>
 
-        {/* GRID */}
+       
         <div className="grid grid-cols-2 gap-6">
           <EventTicketCard />
           <EventTicketCard />

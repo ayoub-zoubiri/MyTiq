@@ -1,11 +1,35 @@
-import React from 'react'
+import EventDetails from "../components/Events/EventDetails";
 
-function Events() {
+
+import PriceTicket from "../components/Events/PriceTicket";
+
+export default function EventPage() {
   return (
-    <div>
-      <h1>evetVVVV</h1>
-    </div>
-  )
-}
+    <div className="min-h-screen bg-[#050B16] text-white">
 
-export default Events
+     
+      <div className="w-full h-[300px] overflow-hidden">
+        <img
+          src="public/evnt.jpg"
+          alt="Event Banner"
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+    
+      <div className="max-w-6xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-3 gap-[150px]">
+
+       
+        <div className="lg:col-span-2">
+          <EventDetails />
+        </div>
+
+      
+        <div>
+          <PriceTicket />
+        </div>
+
+      </div>
+    </div>
+  );
+}
