@@ -2,11 +2,11 @@ import Footer from "./components/Footer"
 import Nav from "./components/Nav"
 
 import { Routes, Route } from "react-router-dom";
-import Events from "./components/pages/Events";
+import Events from "./pages/Events";
 
-import About from "./components/pages/About";
-import Contact from "./components/pages/Contact";
-import Tickete from "./components/pages/Tickes/Tickete";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Tickete from "./pages/Tickete";
 
 function App() {
 
