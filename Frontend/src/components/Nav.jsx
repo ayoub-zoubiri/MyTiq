@@ -24,7 +24,13 @@ function Nav() {
   <li className="hover:text-gray-400 cursor-pointer">
     <Link to="/contact">Contact</Link>
   </li>
+
    <li className="hover:text-gray-400 cursor-pointer">
+    <Link to="/ticket">Tickete</Link>
+
+  </li>
+  
+  <li className="hover:text-gray-400 cursor-pointer">
     <Link to="/ticket">Tickete</Link>
   </li>
 </ul>

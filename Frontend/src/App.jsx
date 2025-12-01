@@ -1,43 +1,33 @@
-import Footer from "./components/Footer"
-import Nav from "./components/Nav"
-import AuthPage from "./pages/AuthPage"; 
-import { Routes, Route } from "react-router-dom";
+import Nav from "./components/Nav";
+import Footer from "./components/Footer";
+import AuthPage from "./pages/AuthPage";
 import Events from "./pages/Events";
-
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Tickete from "./pages/Tickete";
 import Layout from "./components/Layout";
 
-function App() {
+import { Routes, Route } from "react-router-dom";
 
+function App() {
   return (
     <>
-    
-    
+      <Routes>
 
- <Routes>
-      
-      {/* Page auth sans Nav et sans Footer */}
-      <Route path="/auth" element={<AuthPage />} />
+        
+        <Route path="/" element={<AuthPage />} />
 
-      {/* Le layout global pour le reste */}
-      <Route path="/*" element={<Layout>
-            <Routes>
-              <Route path="/events" element={<Events />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/ticket" element={<Tickete />} />
-            </Routes>
-          </Layout>
-        }
-      />
+        
+        <Route element={<Layout />}>
+          <Route path="/events" element={<Events />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/ticket" element={<Tickete />} />
+        </Route>
 
-    </Routes>
-
-
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
