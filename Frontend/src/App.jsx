@@ -1,6 +1,6 @@
 import Footer from "./components/Footer"
 import Nav from "./components/Nav"
-
+import AuthPage from "./pages/AuthPage"; 
 import { Routes, Route } from "react-router-dom";
 import Events from "./pages/Events";
 
@@ -16,7 +16,7 @@ function App() {
 
      <Routes>
         <Route path="/events" element={<Events/>}/>
-        
+        <Route path="/auth" element={<AuthPage/>}/>
         <Route path="/about" element={<About/>}/>
         <Route path="/contact" element={<Contact/>}/>
          <Route path="/ticket" element={<Tickete/>}/>
