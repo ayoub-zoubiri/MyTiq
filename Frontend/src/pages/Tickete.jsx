@@ -1,6 +1,6 @@
 
 import { Search, ChevronDown } from "lucide-react";
-import EventTicketCard from "./EventTicketCard";
+import EventTicketCard from "../components/Tickes/EventTicketCard";
 
 
 
