@@ -8,6 +8,7 @@ import Tickete from "./pages/Tickete";
 import Layout from "./components/Layout";
 
 import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
 
         
         <Route element={<Layout />}>
+        <Route path="/Home" element={<Home />} />
+        
           <Route path="/events" element={<Events />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
