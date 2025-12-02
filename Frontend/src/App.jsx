@@ -32,10 +32,11 @@ function App() {
         </ProtectedRoute>
       } />
 
+
       {/* Le layout global pour le reste */}
       <Route path="/*" element={<Layout>
             <Routes>
-              /Home
+             
               <Route path="/Home" element={<Home />} />
               <Route path="/" element={<Navigate to="/events" replace />} />
               <Route path="/events" element={<Events />} />
