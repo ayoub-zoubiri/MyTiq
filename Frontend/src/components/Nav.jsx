@@ -12,8 +12,12 @@ function Nav() {
       </div>
 
   
-      
+     
 <ul className="flex gap-6">
+
+<li className="hover:text-gray-400 cursor-pointer">
+     <Link to="/Home">Home</Link>
+  </li>
   <li className="hover:text-gray-400 cursor-pointer">
     <Link to="/events">Events</Link>
   </li>
@@ -24,7 +28,13 @@ function Nav() {
   <li className="hover:text-gray-400 cursor-pointer">
     <Link to="/contact">Contact</Link>
   </li>
+
    <li className="hover:text-gray-400 cursor-pointer">
+    <Link to="/ticket">Tickete</Link>
+
+  </li>
+  
+  <li className="hover:text-gray-400 cursor-pointer">
     <Link to="/ticket">Tickete</Link>
   </li>
 </ul>

@@ -1,9 +1,9 @@
+
 import Footer from "./components/Footer"
 import Nav from "./components/Nav"
 import AuthPage from "./pages/AuthPage"; 
 import { Routes, Route, Navigate } from "react-router-dom";
 import Events from "./pages/Events";
-
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Tickete from "./pages/Tickete";
@@ -12,10 +12,11 @@ import AdminEvents from "./pages/AdminEvents";
 import { EventProvider } from "./context/EventContext";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Home from "./pages/Home";
 
 function App() {
-
   return (
+
     <AuthProvider>
      <Routes>
       
@@ -34,6 +35,8 @@ function App() {
       {/* Le layout global pour le reste */}
       <Route path="/*" element={<Layout>
             <Routes>
+              /Home
+              <Route path="/Home" element={<Home />} />
               <Route path="/" element={<Navigate to="/events" replace />} />
               <Route path="/events" element={<Events />} />
               <Route path="/about" element={<About />} />
@@ -47,6 +50,7 @@ function App() {
     </Routes>
     </AuthProvider>
   )
+
 }
 
-export default App
+export default App;

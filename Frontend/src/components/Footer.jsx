@@ -5,7 +5,7 @@ export default function Footer() {
         
         <div className="flex flex-col md:flex-row md:justify-between md:items-start space-y-12 md:space-y-0">
 
-          {/* Logo + Description */}
+         
           <div className="max-w-sm space-y-4">
             <div className="flex items-center space-x-2">
               <span className="text-white text-2xl">🎟️</span>
@@ -58,7 +58,7 @@ export default function Footer() {
 
         </div>
 
-        {/* Bottom line */}
+       
         <div className="w-full border-t border-gray-700 mt-16 pt-6 text-center text-gray-500 text-sm">
           © 2025 MyTiq. All rights reserved.
         </div>
