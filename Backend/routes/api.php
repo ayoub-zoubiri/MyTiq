@@ -48,3 +48,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/newsletters/{id}', [NewsletterController::class, 'show']);
     Route::delete('/newsletters/{id}', [NewsletterController::class, 'destroy']);
 });
+ Route::middleware(['auth:sanctum','role:admin'])->group(function () {
+    Route::apiResource('users', \App\Http\Controllers\UserController::class);
+ });
+// Route::get('/users', [\App\Http\Controllers\UserController::class, 'index']);
+// Route::post('/users', [\App\Http\Controllers\UserController::class, 'store']);
+// Route::put('/users/{id}', [\App\Http\Controllers\UserController::class, 'update']);
+// Route::delete('/users/{id}', [\App\Http\Controllers\UserController::class, 'destroy']);
