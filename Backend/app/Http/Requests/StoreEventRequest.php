@@ -24,6 +24,7 @@ class StoreEventRequest extends FormRequest
             'capacity' => 'required|integer|min:1',
             'price' => 'required|numeric|min:0',
             'image' => 'nullable|string',
+            'status' => 'nullable|string|in:Active,Draft,Sold Out,Past',
         ];
     }
 }

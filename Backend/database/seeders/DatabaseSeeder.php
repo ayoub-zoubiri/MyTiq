@@ -24,6 +24,14 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
+        // Create Admin User
+        User::create([
+            'name' => 'Admin User',
+            'email' => 'admin@mytiq.com',
+            'password' => bcrypt('password'), // Default password
+            'role' => 'admin',
+        ]);
+
         $users = User::factory(10)->create();
 
 
