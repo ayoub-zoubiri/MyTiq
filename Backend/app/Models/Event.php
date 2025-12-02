@@ -16,6 +16,7 @@ class Event extends Model
         'location',
         'capacity',
         'price',
+        'status',
     ];
 
 
