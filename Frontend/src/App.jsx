@@ -14,6 +14,8 @@ import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
 
+import { TicketProvider } from "./context/TicketContext";
+
 function App() {
   return (
 
@@ -48,7 +50,17 @@ function App() {
         }
       />
 
-    </Routes>
+   
+
+     <Route
+            path="/ticket"
+            element={
+              <TicketProvider>
+                <Tickete />
+              </TicketProvider>
+            }
+          />
+           </Routes>
     </AuthProvider>
   )
 
