@@ -32,13 +32,14 @@ function App() {
         </ProtectedRoute>
       } />
 
+
       {/* Le layout global pour le reste */}
       {/* Le layout global pour le reste */}
       <Route path="/*" element={
         <EventProvider>
           <Layout>
             <Routes>
-              {/* Route for the Home page */}
+             
               <Route path="/Home" element={<Home />} />
               
               {/* Default route redirects to Home instead of events */}
