@@ -34,17 +34,26 @@ function App() {
 
 
       {/* Le layout global pour le reste */}
-      <Route path="/*" element={<Layout>
+      {/* Le layout global pour le reste */}
+      <Route path="/*" element={
+        <EventProvider>
+          <Layout>
             <Routes>
              
               <Route path="/Home" element={<Home />} />
-              <Route path="/" element={<Navigate to="/events" replace />} />
-              <Route path="/events" element={<Events />} />
+              
+              {/* Default route redirects to Home instead of events */}
+              <Route path="/" element={<Home />} />
+              
+              {/* Event Details Page */}
+              <Route path="/events/:id" element={<Events />} />
+              
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/ticket" element={<Tickete />} />
             </Routes>
           </Layout>
+        </EventProvider>
         }
       />
 

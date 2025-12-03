@@ -1,49 +1,77 @@
-export default function EventCard() {
+import { Calendar, Clock } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+export default function EventCard({ event }) {
+  if (!event) return null;
+
+  // Helper to format date safely
+  const formatDate = (dateString) => {
+    if (!dateString) return "TBA";
+    try {
+      return new Date(dateString).toLocaleDateString(undefined, {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      });
+    } catch (e) {
+      return dateString;
+    }
+  };
+
   return (
-    <div className="w-[260px] bg-[#0B0B0E] rounded-2xl overflow-hidden shadow-lg border border-white/5">
+    // Card Container - Removed fixed width to allow grid control
+    <div className="w-full bg-[#121212] rounded-2xl overflow-hidden shadow-lg border border-white/10 hover:border-white/20 transition-all duration-300 group">
       
-      
-      <div className="w-full h-[160px]">
+      {/* Event Image */}
+      <div className="w-full h-[200px] overflow-hidden relative">
         <img
-          src="public/ENT1.jpg"
-          alt="Event Banner"
-          className="w-full h-full object-cover"
+          src={event.image ? `http://localhost:8000/storage/${event.image}` : "/ENT1.jpg"} // Use event image or fallback
+          alt={event.title}
+          className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+          onError={(e) => {e.target.src = "/ENT1.jpg"}} // Fallback on error
         />
+        {/* Category Tag Overlay */}
+        <div className="absolute top-3 left-3">
+             <span className="inline-block text-xs font-medium px-3 py-1 bg-[#2A2A35]/90 backdrop-blur-sm text-[#A78BFA] rounded-full">
+              {event.category || "Event"}
+            </span>
+        </div>
       </div>
 
-      
-      <div className="p-4 space-y-3">
+      {/* Event Details */}
+      <div className="p-5 space-y-4">
 
-       
-        <span className="text-xs px-3 py-1 bg-purple-200/20 text-purple-300 rounded-full">
-          Music
-        </span>
-
-       
-        <h2 className="text-white font-semibold text-lg">
-          Electronic Music Festival
+        {/* Event Title */}
+        <h2 className="text-white font-bold text-xl leading-tight line-clamp-2 h-[3.5rem]">
+          {event.title}
         </h2>
 
-      
-        <div className="flex items-center gap-2 text-gray-400 text-sm">
-          <span>📅</span> Dec 15, 2024
-          <span className="mx-1">•</span>
-          <span>⏰ 8:00 PM</span>
+        {/* Date and Time */}
+        <div className="flex items-center gap-4 text-gray-400 text-sm">
+          <div className="flex items-center gap-1.5">
+            <Calendar size={14} />
+            <span>{formatDate(event.date)}</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <Clock size={14} />
+            <span>{event.time || "8:00 PM"}</span>
+          </div>
         </div>
 
-        
-        <div className="flex items-center justify-between mt-3">
-          <p className="text-white font-bold text-xl">
-            98<span className="text-sm ml-1">MAD</span>
-            <span className="text-gray-400 text-xs"> /ticket</span>
+        {/* Price and Details Button */}
+        <div className="flex items-center justify-between pt-2 border-t border-white/5 mt-2">
+          <p className="text-white font-bold text-2xl">
+            {event.price}<span className="text-base font-normal text-gray-400">MAD</span>
+            <span className="text-gray-500 text-xs font-normal ml-1">/ticket</span>
           </p>
 
-          <button className="bg-white text-black px-4 py-1.5 rounded-lg font-medium hover:bg-gray-200 transition">
-            Details
-          </button>
+          <Link to={`/events/${event.id}`}>
+            <button className="bg-white text-black px-6 py-2 rounded-xl font-semibold text-sm hover:bg-gray-200 transition-colors">
+              Details
+            </button>
+          </Link>
         </div>
       </div>
     </div>
   );
 }
-
