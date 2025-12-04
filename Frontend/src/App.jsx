@@ -22,10 +22,10 @@ function App() {
     <AuthProvider>
      <Routes>
       
-      {/* Page auth sans Nav et sans Footer */}
+ 
      <Route path="/auth" element={<AuthPage />} />
 
-      {/* Admin Routes */}
+    
       <Route path="/admin/events" element={
         <ProtectedRoute roles={['admin']}>
           <EventProvider>
@@ -35,8 +35,7 @@ function App() {
       } />
 
 
-      {/* Le layout global pour le reste */}
-      {/* Le layout global pour le reste */}
+   
       <Route path="/*" element={
         <EventProvider>
           <Layout>
@@ -44,15 +43,14 @@ function App() {
              
               <Route path="/Home" element={<Home />} />
               
-              {/* Default route redirects to Home instead of events */}
+              
               <Route path="/" element={<Home />} />
               
-              {/* Event Details Page */}
+              
               <Route path="/events/:id" element={<Events />} />
               
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/ticket" element={<Tickete />} />
+            
+              <Route path="/ticket" element={    <Tickete />} />
             </Routes>
           </Layout>
         </EventProvider>
