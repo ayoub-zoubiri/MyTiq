@@ -10,11 +10,15 @@ export const useTickets = () => useContext(TicketContext);
 
 export const TicketProvider = ({ children }) => {
          const [tickets, setTickets] = useState([]);
-  const [loading, setLoading] = useState(true);
+      const [loading, setLoading] = useState(true);
+
 
   const fetchTickets = async () => {
           try {
+           
+
       setLoading(true);
+
 
       const token = localStorage.getItem("token"); 
 
@@ -41,4 +45,5 @@ export const TicketProvider = ({ children }) => {
       {children}
     </TicketContext.Provider>
   );
+  
 };
