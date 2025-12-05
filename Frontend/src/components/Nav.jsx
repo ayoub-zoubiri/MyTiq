@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from "react-router-dom";
 
 function Nav() {
-
   return (
     <>
      <nav className="bg-black text-white px-8 py-4 flex items-center justify-between">
@@ -32,9 +31,7 @@ function Nav() {
 
      
       <div className="hidden md:flex items-center gap-4">
-        
-         <Link className="hover:text-gray-400" to="/auth"> Sign In</Link>
-         
+        <button className="hover:text-gray-400">Sign In</button>
         <button className="bg-white text-black px-4 py-2 rounded-lg font-semibold hover:bg-gray-200">
           Get Started
          

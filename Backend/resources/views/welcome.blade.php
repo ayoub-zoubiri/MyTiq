@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -130,4 +130,78 @@
             </div>
         </div>
     </body>
+</html> --}}
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Billet - {{ $ticket->code }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6 text-[11px] font-sans">
+
+<div class="max-w-md mx-auto bg-white shadow-lg rounded-xl overflow-hidden border border-gray-200">
+
+    
+    <div class="bg-indigo-600 text-white text-center py-4">
+        <h1 class="text-lg font-semibold tracking-wide">Billet d'Entrée</h1>
+        <p class="text-[10px] opacity-80">Valide uniquement le jour de l'événement</p>
+    </div>
+
+   
+    <div class="px-5 py-4 text-center border-b border-gray-200">
+        <p class="text-[10px] text-gray-500 uppercase">Code billet</p>
+        <p class="font-mono text-indigo-600 text-lg font-bold tracking-widest">
+            {{ $ticket->code }}
+        </p>
+    </div>
+
+  
+    <div class="px-5 py-4 border-b border-gray-200">
+        <h2 class="text-sm font-semibold text-indigo-600 mb-2">{{ $ticket->event->title }}</h2>
+        <p><span class="font-semibold text-gray-700">Date :</span> 
+            {{ \Carbon\Carbon::parse($ticket->event->starts_at)->format('d/m/Y H:i') }}
+        </p>
+        <p><span class="font-semibold text-gray-700">Lieu :</span> {{ $ticket->event->location }}</p>
+        <p>
+            <span class="font-semibold text-gray-700">Prix :</span>
+            <span class="inline-block bg-indigo-600 text-white px-2 py-[1px] rounded text-[11px] ml-1">
+                {{ number_format($ticket->amount, 2) }} €
+            </span>
+        </p>
+    </div>
+
+ 
+    <div class="px-5 py-4 border-b border-gray-200">
+        <h3 class="text-sm font-semibold text-indigo-600 mb-2">Acheteur</h3>
+        <p><span class="font-semibold text-gray-700">Nom :</span> {{ $ticket->user->name }}</p>
+        <p><span class="font-semibold text-gray-700">Email :</span> {{ $ticket->user->email }}</p>
+    </div>
+
+  
+    <div class="px-5 py-4 border-b border-gray-200">
+        <h3 class="text-sm font-semibold text-indigo-600 mb-2">Achat</h3>
+        <p><span class="font-semibold text-gray-700">Date :</span> {{ $ticket->created_at->format('d/m/Y') }}</p>
+        <p><span class="font-semibold text-gray-700">Heure :</span> {{ $ticket->created_at->format('H:i') }}</p>
+    </div>
+
+   
+    <div class="px-5 py-4 bg-yellow-50 border-l-4 border-yellow-400 text-[10px] leading-4">
+        Ce billet doit être présenté à l’entrée. Arrivez 15 minutes avant le début de l’événement.  
+        Billet personnel et non transférable.
+    </div>
+
+  
+    <div class="text-center text-gray-500 text-[9px] py-3">
+        MyTiq © {{ date('Y') }} — Généré le {{ now()->format('d/m/Y H:i') }}
+    </div>
+
+</div>
+
+</body>
 </html>
