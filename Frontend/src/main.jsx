@@ -1,11 +1,29 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
+// 
+
+
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
-createRoot(document.getElementById('root')).render(
-    <StrictMode>
+
+
+import { AuthProvider } from "./context/AuthContext";
+import { EventProvider } from "./context/EventContext";
+import { NewsletterProvider } from "./context/NewsletterContext";
+import { TicketProvider } from "./context/TicketContext";
+
+createRoot(document.getElementById("root")).render(
+  <StrictMode>
     <BrowserRouter>
-      <App />
+      <AuthProvider>
+        <EventProvider>
+          <NewsletterProvider>
+            <TicketProvider>
+              <App />
+            </TicketProvider>
+          </NewsletterProvider>
+        </EventProvider>
+      </AuthProvider>
     </BrowserRouter>
   </StrictMode>
-)
+);

@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Configure axios defaults
+
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   }
@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
         setUser(response.data);
       } catch (error) {
         console.error("Error fetching user:", error);
-        logout();
+       
       } finally {
         setLoading(false);
       }
