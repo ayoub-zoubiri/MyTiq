@@ -84,11 +84,12 @@
 
 
 
+
+
 import { Routes, Route } from "react-router-dom";
 import AuthPage from "./pages/AuthPage";
 import Events from "./pages/Events";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
+
 import Tickete from "./pages/Tickete";
 import Layout from "./components/Layout";
 import AdminEvents from "./pages/AdminEvents";
