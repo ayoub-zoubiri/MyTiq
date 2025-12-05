@@ -18,7 +18,7 @@ export function NewsletterProvider({ children }) {
       const response = await axios.post("/newsletter", { email });
 
       setSuccess(response.data.message);
-      setEmail("");
+      setEmail(""); // vider le champ après envoi
     } catch (err) {
       setError("Erreur lors de l'inscription");
     } finally {

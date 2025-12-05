@@ -115,7 +115,7 @@ function App() {
         element={
           <Layout>
             <Routes>
-              <Route path="/" element={<Home />} />
+             
               <Route path="/home" element={<Home />} />
               <Route path="/events/:id" element={<Events />} />
               <Route path="/ticket" element={<Tickete />} />
