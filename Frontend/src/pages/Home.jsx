@@ -28,9 +28,7 @@ function Home() {
             </div>
             
             {/* View All Link */}
-            <a href="/events" className="text-gray-400 hover:text-white transition flex items-center gap-1">
-              View All <span className="text-sm">➜</span>
-            </a>
+           
           </div>
 
           {/* Loading/Error State */}
