@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import ToggleButton from '../components/ToggleButton';
 import AuthForm from '../components/AuthForm';
+import { Link } from "react-router-dom";
 
-// Les styles Tailwind sont directement intégrés ici
 const AuthPage = () => {
   const [mode, setMode] = useState('signIn'); 
   
@@ -10,18 +10,18 @@ const AuthPage = () => {
   const subtitle = 'Enter your credentials to continue'; 
 
   return (
-    // Conteneur de la page : fond noir, centrage (flex)
+    
     <div className=" min-h-screen bg-black text-white flex items-center justify-center p-4">
       
-      {/* Carte du formulaire : fond gris foncé, coins arrondis, ombre */}
+     
       <div className="w-full max-w-md bg-gray-900 p-10 rounded-xl shadow-2xl border border-white border-opacity-10">
         
-        {/* Logo MyTiq */}
+      
         <div className="text-2xl font-bold text-white mb-6 text-center">
           MyTiq
         </div>
 
-        {/* Titres */}
+       
         <h2 className="text-2xl font-normal mb-1 text-center">
           {title}
         </h2>
@@ -29,14 +29,17 @@ const AuthPage = () => {
           {subtitle}
         </p>
 
-        {/* Composants Enfants */}
+       
         <ToggleButton currentMode={mode} onToggle={setMode} />
         <AuthForm mode={mode} />
         
-        {/* Lien Forgot Password (placé ici pour le style de la capture) */}
-        <a href="#" className="text-sm text-blue-400 hover:underline block text-right mt-2">
-            Forgot Password?
-        </a>
+          <h2 className='mt-[180px]'></h2>
+
+  <Link to="/">
+  <button className="px-5 py-2 rounded-md bg-white/20 text-white font-medium backdrop-blur-md border border-white/40 hover:bg-white/30 transition">
+  Home page
+  </button>
+</Link>
       </div>
     </div>
   );

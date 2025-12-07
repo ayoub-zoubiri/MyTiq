@@ -39,16 +39,14 @@ export default function EventPage() {
   return (
     <div className="min-h-screen bg-[#050B16] text-white">
 
-      {/* Hero Image */}
-      <div className="w-full h-[300px] overflow-hidden relative">
+   
+
         <img
-          src={event.image ? `http://localhost:8000/storage/${event.image}` : "/evnt.jpg"}
-          alt={event.title}
-          className="w-full h-full object-cover"
-          onError={(e) => {e.target.src = "/evnt.jpg"}}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050B16] to-transparent opacity-80"></div>
-      </div>
+  src={event.image}
+  alt={event.title}
+  className="w-full h-full object-cover"
+  //  onError={(e) => { e.target.src = "/evnt.jpg"; }}
+/>
 
     
       <div className="max-w-6xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-3 gap-[50px] lg:gap-[100px] -mt-20 relative z-10">

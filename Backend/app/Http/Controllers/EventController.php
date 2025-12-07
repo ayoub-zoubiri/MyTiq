@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class EventController extends Controller
 {
@@ -15,13 +16,55 @@ class EventController extends Controller
         return response()->json($events);
     }
 
-    public function store(StoreEventRequest $request)
-    {
+    //     public function store(StoreEventRequest $request)
+    // {
+    //     $event = Event::create($request->validated());
 
-        $event = Event::create($request->validated());
+    //      if ($request->hasFile('image')) {
+    //     $uploaded = Cloudinary::upload($request->file('image')->getRealPath());
+    //     $data['image'] = $uploaded->getSecurePath();
+    // }
+    //     return response()->json($event, 201);
+    // }
 
-        return response()->json($event, 201);
+// public function store(StoreEventRequest $request)
+// {
+//     $data = $request->validated();
+
+   
+//     if ($request->hasFile('image')) {
+//         $uploaded = Cloudinary::upload($request->file('image')->getRealPath());
+//         $data['image'] = $uploaded->getSecurePath(); 
+//     }
+
+//     $event = Event::create($data);
+
+//     return response()->json($event, 201);
+// }
+
+
+public function store(StoreEventRequest $request)
+{
+    $data = $request->validated();
+
+    // Upload Image if exists
+    if ($request->hasFile('image')) {
+
+        $uploaded = Cloudinary::upload(
+            $request->file('image')->getRealPath(),
+            ['folder' => 'events']
+        );
+
+        $data['image'] = $uploaded->getSecurePath(); // URL de Cloudinary
     }
+
+    // Créer l'événement APRES avoir ajouté l'image
+    $event = Event::create($data);
+
+    return response()->json($event, 201);
+}
+
+
 
     public function show(Event $event)
     {
@@ -29,6 +72,10 @@ class EventController extends Controller
         
         return response()->json($event);
     }
+
+
+
+
 
     public function update(UpdateEventRequest $request, Event $event)
     {

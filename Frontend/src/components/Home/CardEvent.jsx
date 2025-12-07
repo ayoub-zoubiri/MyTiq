@@ -23,13 +23,20 @@ export default function EventCard({ event }) {
     <div className="w-full bg-[#121212] rounded-2xl overflow-hidden shadow-lg border border-white/10 hover:border-white/20 transition-all duration-300 group">
       
       {/* Event Image */}
-      <div className="w-full h-[200px] overflow-hidden relative">
-        <img
+      <div className="w-full h-[200px] overflow-hidden relative ">
+        {/* <img
           src={event.image ? `http://localhost:8000/storage/${event.image}` : "/ENT1.jpg"} // Use event image or fallback
           alt={event.title}
           className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
           onError={(e) => {e.target.src = "/ENT1.jpg"}} // Fallback on error
-        />
+        /> */}
+
+           <img
+  src={event.image}
+  alt={event.title}
+  className="w-full h-full object-cover"
+  //  onError={(e) => { e.target.src = "/evnt.jpg"; }}
+/>
         {/* Category Tag Overlay */}
         <div className="absolute top-3 left-3">
              <span className="inline-block text-xs font-medium px-3 py-1 bg-[#2A2A35]/90 backdrop-blur-sm text-[#A78BFA] rounded-full">
