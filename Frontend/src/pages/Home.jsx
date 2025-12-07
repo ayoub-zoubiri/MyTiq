@@ -16,7 +16,7 @@ function Home() {
      
       <Herosection />
 
-      
+      <div id="events-section"> 
       <section className="bg-black py-12 px-6">
         <div className="max-w-7xl mx-auto">
           
@@ -26,9 +26,6 @@ function Home() {
               <h2 className="text-white text-3xl font-bold">Trending Events</h2>
               <p className="text-gray-400 mt-2">Don't miss out on these popular experiences</p>
             </div>
-            
-           
-           
           </div>
 
           
@@ -39,7 +36,7 @@ function Home() {
           {!loading && !error && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
               {events.length > 0 ? (
-                events.slice(0, 6).map((event) => (
+                events.slice(0, 20).map((event) => (
                   <CardEvent key={event.id} event={event} />
                 ))
               ) : (
@@ -49,7 +46,7 @@ function Home() {
           )}
 
         </div>
-      </section>
+      </section></div>
 
      
       <Newsletter />

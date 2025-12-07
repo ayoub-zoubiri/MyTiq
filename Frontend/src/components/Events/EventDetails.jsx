@@ -14,21 +14,21 @@ export default function EventDetails({ event }) {
   return (
     <div className="w-full text-white space-y-8">
 
-      {/* Title */}
+     
       <h1 className="text-4xl font-bold leading-tight">{event.title}</h1>
 
-      {/* Info row */}
+     
       <div className="flex flex-wrap items-center gap-6 text-sm text-gray-300 bg-[#111827] p-4 rounded-xl border border-gray-800">
 
         <div className="flex items-center gap-2">
           <span className="text-blue-400 text-lg">📅</span>
-          <span className="font-medium">{formatDate(event.date)}</span>
+          <span className="font-medium">{formatDate(event.starts_at)}</span>
         </div>
 
-        <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
           <span className="text-blue-400 text-lg">⏰</span>
           <span className="font-medium">{event.time || "Time TBA"}</span>
-        </div>
+        </div> */}
 
         <div className="flex items-center gap-2">
           <span className="text-blue-400 text-lg">📍</span>
@@ -55,9 +55,9 @@ export default function EventDetails({ event }) {
            </span>
         )}
        
-        <span className="bg-[#1F2937] px-4 py-1.5 rounded-full text-sm border border-gray-700 text-gray-300">
+        {/* <span className="bg-[#1F2937] px-4 py-1.5 rounded-full text-sm border border-gray-700 text-gray-300">
           Live Performance
-        </span>
+        </span> */}
       </div>
 
       <div>
@@ -85,9 +85,9 @@ export default function EventDetails({ event }) {
               <span>🧭</span> Get Directions
             </button>
 
-            <button className="flex items-center gap-2 hover:underline hover:text-blue-300 transition">
+            {/* <button className="flex items-center gap-2 hover:underline hover:text-blue-300 transition">
               <span>🔗</span> Share Location
-            </button>
+            </button> */}
           </div>
 
         </div>

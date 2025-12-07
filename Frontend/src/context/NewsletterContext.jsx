@@ -15,11 +15,15 @@ export function NewsletterProvider({ children }) {
     setError("");
 
     try {
-      const response = await axios.post("/newsletter", { email });
+      const response = await axios.post(
+        "http://localhost:8000/api/newsletter",
+        { email }
+      );
 
       setSuccess(response.data.message);
-      setEmail(""); // vider le champ après envoi
+      setEmail("");
     } catch (err) {
+      console.log(err);
       setError("Erreur lors de l'inscription");
     } finally {
       setLoading(false);
