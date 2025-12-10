@@ -23,7 +23,7 @@ class UpdateEventRequest extends FormRequest
             'location' => 'nullable|string|max:255',
             'capacity' => 'required|integer|min:1',
             'price' => 'required|numeric|min:0',
-            'image' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'status' => 'nullable|string|in:Active,Draft,Sold Out,Past',
         ];
     }

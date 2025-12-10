@@ -26,7 +26,16 @@ export const EventProvider = ({ children }) => {
 
   const createEvent = async (eventData) => {
     try {
-      const response = await axios.post('http://localhost:8000/api/events', eventData);
+      const formData = new FormData();
+      Object.keys(eventData).forEach(key => {
+        if (eventData[key] !== '' && eventData[key] !== null) {
+          formData.append(key, eventData[key]);
+        }
+      });
+
+      const response = await axios.post('http://localhost:8000/api/events', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
       setEvents([response.data, ...events]);
       return { success: true };
     } catch (err) {
@@ -37,7 +46,22 @@ export const EventProvider = ({ children }) => {
 
   const updateEvent = async (id, eventData) => {
     try {
-      const response = await axios.put(`http://localhost:8000/api/events/${id}`, eventData);
+      const formData = new FormData();
+      Object.keys(eventData).forEach(key => {
+        // Skip if image is a string (existing URL) - only append if it's a File
+        if (key === 'image' && typeof eventData[key] === 'string') {
+          return;
+        }
+        if (eventData[key] !== '' && eventData[key] !== null) {
+          formData.append(key, eventData[key]);
+        }
+      });
+      // For PUT requests with FormData, use POST with _method override
+      formData.append('_method', 'PUT');
+
+      const response = await axios.post(`http://localhost:8000/api/events/${id}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
       setEvents(events.map(event => event.id === id ? response.data : event));
       return { success: true };
     } catch (err) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import InputGroup from '../InputGroup'; // Reusing your InputGroup if possible, or creating standard inputs
 
 const EventFormModal = ({ isOpen, onClose, onSubmit, initialData }) => {
@@ -9,8 +9,10 @@ const EventFormModal = ({ isOpen, onClose, onSubmit, initialData }) => {
     location: '',
     capacity: '',
     price: '',
-    image: '' // Optional, might need file upload logic later
+    image: null // File object for upload
   });
+  const [imagePreview, setImagePreview] = useState(null);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     if (initialData) {
@@ -25,9 +27,11 @@ const EventFormModal = ({ isOpen, onClose, onSubmit, initialData }) => {
         location: initialData.location || '',
         capacity: initialData.capacity || '',
         price: initialData.price || '',
-        image: initialData.image || '',
+        image: null,
         status: initialData.status || 'Active'
       });
+      // Set existing image as preview
+      setImagePreview(initialData.image || null);
     } else {
       setFormData({
         title: '',
@@ -36,9 +40,10 @@ const EventFormModal = ({ isOpen, onClose, onSubmit, initialData }) => {
         location: '',
         capacity: '',
         price: '',
-        image: '',
+        image: null,
         status: 'Active'
       });
+      setImagePreview(null);
     }
   }, [initialData, isOpen]);
 
@@ -47,6 +52,24 @@ const EventFormModal = ({ isOpen, onClose, onSubmit, initialData }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData(prev => ({ ...prev, image: file }));
+      // Create preview URL
+      const previewUrl = URL.createObjectURL(file);
+      setImagePreview(previewUrl);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setFormData(prev => ({ ...prev, image: null }));
+    setImagePreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   const handleSubmit = (e) => {
@@ -155,16 +178,50 @@ const EventFormModal = ({ isOpen, onClose, onSubmit, initialData }) => {
             </div>
           </div>
             
-            {/* Image URL for now, file upload is more complex */}
-           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">Image URL</label>
-            <input
-              type="text"
-              name="image"
-              value={formData.image}
-              onChange={handleChange}
-              className="w-full bg-[#2D3748] text-white rounded-lg border border-gray-600 px-4 py-2 focus:outline-none focus:border-blue-500"
-            />
+          {/* Image Upload */}
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Event Image</label>
+            
+            {/* Image Preview */}
+            {imagePreview && (
+              <div className="relative mb-3">
+                <img
+                  src={imagePreview}
+                  alt="Preview"
+                  className="w-full h-48 object-cover rounded-lg border border-gray-600"
+                />
+                <button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full p-1 transition-colors"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </button>
+              </div>
+            )}
+            
+            {/* Upload Button */}
+            <div
+              onClick={() => fileInputRef.current?.click()}
+              className="w-full bg-[#2D3748] border-2 border-dashed border-gray-600 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500 hover:bg-[#374151] transition-all"
+            >
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+              <svg className="w-10 h-10 mx-auto text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+              <p className="text-gray-400 text-sm">
+                {imagePreview ? 'Click to change image' : 'Click to upload image'}
+              </p>
+              <p className="text-gray-500 text-xs mt-1">PNG, JPG, GIF, WEBP up to 5MB</p>
+            </div>
           </div>
 
           <div className="flex justify-end space-x-3 mt-6">
