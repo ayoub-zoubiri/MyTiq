@@ -27,6 +27,15 @@ function Nav() {
             <Link to="/ticket">My Tickets</Link>
           </li>
         )}
+
+        {user && user.role === 'admin' && (
+          <li className="hover:text-gray-400 cursor-pointer">
+            <Link to="/admin/events" className="flex items-center gap-1 text-blue-400 hover:text-blue-300">
+             
+              Dashboard
+            </Link>
+          </li>
+        )}
       </ul>
 
       <div className="hidden md:flex items-center gap-4">

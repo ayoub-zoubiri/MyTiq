@@ -79,8 +79,18 @@ public function store(StoreEventRequest $request)
 
     public function update(UpdateEventRequest $request, Event $event)
     {
+        $data = $request->validated();
 
-        $event->update($request->validated());
+        // Upload new image if provided
+        if ($request->hasFile('image')) {
+            $uploaded = Cloudinary::upload(
+                $request->file('image')->getRealPath(),
+                ['folder' => 'events']
+            );
+            $data['image'] = $uploaded->getSecurePath();
+        }
+
+        $event->update($data);
 
         return response()->json($event);
     }

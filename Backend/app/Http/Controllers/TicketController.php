@@ -82,10 +82,25 @@ class TicketController extends Controller
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        if (!$ticket->pdf_path || !Storage::exists($ticket->pdf_path)) {
-            return response()->json(['message' => 'PDF not found'], 404);
+        $ticket->load(['event', 'user']);
+
+        // Generate PDF on-the-fly if it doesn't exist
+        if (!$ticket->pdf_path || !\Illuminate\Support\Facades\Storage::exists($ticket->pdf_path)) {
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdfs.ticket-pdf', ['ticket' => $ticket]);
+            
+            // Create tickets directory if it doesn't exist
+            if (!Storage::exists('tickets')) {
+                Storage::makeDirectory('tickets');
+            }
+            
+            // Save PDF to storage
+            $pdfPath = 'tickets/ticket-' . $ticket->code . '.pdf';
+            Storage::put($pdfPath, $pdf->output());
+            
+            // Update ticket with PDF path
+            $ticket->update(['pdf_path' => $pdfPath]);
         }
 
-        return Storage::download($ticket->pdf_path, 'billet-' . $ticket->code . '.pdf');
+        return Storage::download($ticket->pdf_path, 'ticket-' . $ticket->code . '.pdf');
     }
 }

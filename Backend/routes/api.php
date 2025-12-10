@@ -42,6 +42,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/tickets', [TicketController::class, 'index']);
     Route::post('/tickets', [TicketController::class, 'store']);
     Route::get('/tickets/{ticket}', [TicketController::class, 'show']);
+    Route::get('/tickets/{ticket}/download', [TicketController::class, 'downloadPdf']);
 });
 
 
